@@ -1,0 +1,29 @@
+<form class="filters" [formGroup]="form">
+  <input type="search" formControlName="search" maxlength="100" placeholder="Search title or organization" />
+
+  <select formControlName="status">
+    <option value="">All statuses</option>
+    @for (s of statuses; track s) {
+      <option [value]="s">{{ s }}</option>
+    }
+  </select>
+
+  <select formControlName="priority">
+    <option value="">All priorities</option>
+    @for (p of priorities; track p) {
+      <option [value]="p">{{ p }}</option>
+    }
+  </select>
+
+  <input formControlName="organizationName" maxlength="200" placeholder="Organization (exact)" />
+  <input formControlName="assignedTo" maxlength="100" placeholder="Assigned to (exact)" />
+
+  <label>From <input type="date" formControlName="createdFrom" /></label>
+  <label>To <input type="date" formControlName="createdTo" /></label>
+
+  <button type="button" (click)="clear()">Clear</button>
+</form>
+
+@if (invalidDateRange) {
+  <p class="error">"From" date must be before or equal to "To" date.</p>
+}

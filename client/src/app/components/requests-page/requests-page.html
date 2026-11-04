@@ -1,0 +1,54 @@
+<app-requests-filters (filtersChange)="applyFilters($event)" />
+
+@if (stats$ | async; as statsState) {
+  <app-requests-stats [state]="statsState" />
+}
+
+@if (notice(); as n) {
+  <p class="notice" [class.notice-error]="n.isError">
+    {{ n.text }}
+    <button type="button" class="dismiss" (click)="notice.set(null)">×</button>
+  </p>
+}
+
+@if (historyItem(); as item) {
+  <app-request-history
+    [item]="item"
+    [state]="historyState()"
+    (closed)="closeHistory()" />
+}
+
+@if (state$ | async; as state) {
+  @if (state.kind === 'loading') {
+    <p class="message">Loading...</p>
+  } @else if (state.kind === 'error') {
+    <p class="message error">
+      Failed to load requests.
+      <button type="button" (click)="reload()">Try again</button>
+    </p>
+  } @else if (state.result.items.length === 0) {
+    <p class="message">No requests found.</p>
+  } @else {
+    <app-requests-table
+      [items]="state.result.items"
+      [sortBy]="state.query.sortBy"
+      [sortDirection]="state.query.sortDirection"
+      (sortChange)="changeSort($event)"
+      (statusChange)="updateStatus($event)"
+      (historyRequested)="showHistory($event)"
+      (bulkStatusChange)="updateStatusBulk($event)" />
+
+    <div class="pager">
+      <button type="button" (click)="goToPage(state.result.page - 1)" [disabled]="state.result.page <= 1">
+        Previous
+      </button>
+      <span>
+        Page {{ state.result.page }} of {{ state.result.totalPages }}
+        ({{ state.result.totalCount }} requests)
+      </span>
+      <button type="button" (click)="goToPage(state.result.page + 1)" [disabled]="state.result.page >= state.result.totalPages">
+        Next
+      </button>
+    </div>
+  }
+}

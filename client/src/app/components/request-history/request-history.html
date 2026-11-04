@@ -1,0 +1,32 @@
+<section class="history">
+  <div class="history-header">
+    <strong>History of request {{ item().id }}: {{ item().title }}</strong>
+    <button type="button" class="dismiss" (click)="closed.emit()">×</button>
+  </div>
+
+  @if (state(); as s) {
+    @if (s.kind === 'error') {
+      <p class="error">Failed to load history.</p>
+    } @else if (s.kind === 'loading') {
+      <p>Loading history...</p>
+    } @else if (s.changes.length === 0) {
+      <p>No status changes yet.</p>
+    } @else {
+      <table>
+        <thead>
+          <tr><th>When</th><th>Changed by</th><th>From</th><th>To</th></tr>
+        </thead>
+        <tbody>
+          @for (c of s.changes; track $index) {
+            <tr>
+              <td>{{ c.changedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td>{{ c.changedBy }}</td>
+              <td>{{ c.previousStatus }}</td>
+              <td>{{ c.newStatus }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  }
+</section>

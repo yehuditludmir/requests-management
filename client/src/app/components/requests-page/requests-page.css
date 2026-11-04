@@ -1,0 +1,36 @@
+.message {
+  padding: 16px 0;
+  color: #555;
+}
+
+.error {
+  color: #b00020;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.notice {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin: 0 0 12px;
+  background: #eef8ee;
+  color: #225522;
+}
+
+.notice-error {
+  background: #fdeeee;
+  color: #b00020;
+}
+
+.dismiss {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}

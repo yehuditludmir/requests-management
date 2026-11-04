@@ -1,0 +1,16 @@
+<main>
+  <header class="app-header">
+    <h1>Requests</h1>
+
+    <label>
+      Current user:
+      <select #userSelect (change)="userService.currentUser.set(userSelect.value)">
+        @for (u of userService.users; track u) {
+          <option [value]="u" [selected]="u === userService.currentUser()">{{ u }}</option>
+        }
+      </select>
+    </label>
+  </header>
+
+  <app-requests-page />
+</main>

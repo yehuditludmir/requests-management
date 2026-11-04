@@ -1,0 +1,52 @@
+@if (selected().length > 0) {
+  <div class="bulk">
+    {{ selected().length }} selected:
+    <select #bulkStatus>
+      @for (s of statuses; track s) {
+        <option [value]="s">{{ s }}</option>
+      }
+    </select>
+    <button type="button" (click)="applyBulk(bulkStatus.value)">Apply</button>
+  </div>
+}
+
+<table>
+  <thead>
+    <tr>
+      <th><input type="checkbox" [checked]="allSelected()" (change)="toggleAll()" /></th>
+      @for (c of columns; track c.label) {
+        @if (c.field; as field) {
+          <th>
+            <button type="button" class="sort" (click)="sortChange.emit(field)">
+              {{ c.label }} {{ sortIndicator(field) }}
+            </button>
+          </th>
+        } @else {
+          <th>{{ c.label }}</th>
+        }
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (r of items(); track r.id) {
+      <tr>
+        <td><input type="checkbox" [checked]="isSelected(r)" (change)="toggle(r)" /></td>
+        <td>{{ r.id }}</td>
+        <td>{{ r.title }}</td>
+        <td>{{ r.organizationName }}</td>
+        <td>
+          <select #statusSelect (change)="onStatusSelected(r, statusSelect.value)">
+            @for (s of statuses; track s) {
+              <option [value]="s" [selected]="s === r.status">{{ s }}</option>
+            }
+          </select>
+        </td>
+        <td>{{ r.priority }}</td>
+        <td>{{ r.assignedTo ?? '-' }}</td>
+        <td>{{ r.createdAt | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ r.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td><button type="button" (click)="historyRequested.emit(r)">History</button></td>
+      </tr>
+    }
+  </tbody>
+</table>

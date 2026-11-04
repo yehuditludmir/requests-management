@@ -1,0 +1,10 @@
+main {
+  font-family: sans-serif;
+  padding: 16px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

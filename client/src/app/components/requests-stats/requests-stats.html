@@ -1,0 +1,22 @@
+<section class="stats">
+  @if (state(); as s) {
+    @if (s.kind === 'loading') {
+      <span class="message">Loading summary...</span>
+    } @else if (s.kind === 'error') {
+      <span class="error">Summary is unavailable.</span>
+    } @else {
+      <div>
+        <strong>By status:</strong>
+        @for (st of statuses; track st) {
+          <span class="stat">{{ st }}: {{ s.stats.byStatus[st] | number }}</span>
+        }
+      </div>
+      <div>
+        <strong>By priority:</strong>
+        @for (p of priorities; track p) {
+          <span class="stat">{{ p }}: {{ s.stats.byPriority[p] | number }}</span>
+        }
+      </div>
+    }
+  }
+</section>

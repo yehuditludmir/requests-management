@@ -1,0 +1,21 @@
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+}
+
+.stat {
+  margin-left: 12px;
+}
+
+.message {
+  color: #555;
+}
+
+.error {
+  color: #b00020;
+}
